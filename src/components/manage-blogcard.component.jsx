@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { getDay } from "../common/date";
 
-const BlogStats = ({ stats }) => {
+const BlogStats = ({ stats }) => { 
   return <div className="flex gap-2 max-lg:pb-6 max-lg:mb-6 max-lg:border-b max-lg:border-grey">
     {
       Object.keys(stats).map((info, i) => {
@@ -16,7 +16,7 @@ const BlogStats = ({ stats }) => {
   </div>
 }
 
-const ManagePublishedBlogCard = ({ blog }) => {
+export const ManagePublishedBlogCard = ({ blog }) => {
   let { blog_id, title, banner, publishedAt, activity } = blog; 
   const [showStat, setShowStat] = useState(false);
 
@@ -50,4 +50,18 @@ const ManagePublishedBlogCard = ({ blog }) => {
   )
 }
 
-export default ManagePublishedBlogCard;
+export const ManageDraftBlogPost = ({ blog, index }) => {
+  let { blog_id, title, desc } = blog;
+
+  return <div className="flex gap-5 pb-6 mb-6 border-b lg:gap-10 border-grey">
+    <h1 className="flex-none pl-4 text-center blog-index md:pl-6">{index < 10 ? "0" + index : index}</h1>
+    <div>
+      <h1 className="mb-3 blog-title">{title}</h1> 
+      <p className="line-clamp-2 font-gelasio">{desc?.length > 0 ? desc : "No description"}</p>
+      <div className="flex gap-6 mt-3">
+        <Link to={`/editor/${blog_id}`} className="py-2 pr-4 underline">Edit</Link>
+        <button className="py-2 pr-4 underline text-red">Delete</button>
+      </div>
+    </div>
+  </div>
+}
