@@ -1,14 +1,17 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../App";
+import { ThemeContext, UserContext } from "../App";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import logo from "../imgs/logo.png"; 
+import darkLogo from "../imgs/logo-dark.png";
+import lightLogo from "../imgs/logo-light.png";
 import UserNavigationPanel from "./user-navigation.component";
 import axios from "axios";
+import { storeInSession } from "../common/session";
 
 const Navbar = () => {
   const [searchBoxVisibility, setSearchBoxVisibility] = useState(false);
   const { userAuth, userAuth: { access_token, profile_img, new_notification_available },
   setUserAuth} = useContext(UserContext);
+  let { theme, setTheme } = useContext(ThemeContext);
   const [userNavPanel, setUserNavPanel] = useState(false);
   let navigate = useNavigate();
 
@@ -46,11 +49,21 @@ const Navbar = () => {
     }, 300);
   }
 
+  const changeTheme = () => {
+    let newTheme = theme == "light" ? "dark" : "light";
+
+    setTheme(newTheme);
+
+    document.body.setAttribute("data-theme", newTheme);
+
+    storeInSession("theme", newTheme);
+  }
+
   return (
     <>
       <nav className="z-50 navbar">
       <Link to="/" className="flex-none w-10 h-10 cursor-pointer"> 
-        <img src={logo} alt="logo" className="flex-none w-full" />
+        <img src={theme == "light" ? darkLogo : lightLogo} alt="logo" className="flex-none w-full" />
       </Link> 
 
       <div className={"absolute left-0 w-full bg-white top-full mt-0.5 border-b border-grey py-4 px-[5vw] md:border-0 md:block md:relative md:inset-0 md:p-0 md:w-auto md:show " + (searchBoxVisibility ? "show" : "hide")}>
@@ -73,6 +86,9 @@ const Navbar = () => {
           <i className="fi fi-br-edit" />
           <p>Write</p>
         </Link> 
+        <button className="relative w-12 h-12 rounded-full bg-grey hover:bg-black/10" onClick={changeTheme}>
+          <i className={"fi fi-br-" + (theme == "light" ? "moon-stars" : "sun") + " !text-2xl block mt-1"} />        
+        </button> 
         {
           access_token ?
           <>

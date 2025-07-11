@@ -1,10 +1,12 @@
 import { useContext, useEffect } from "react";
-import { UserContext } from "../App";
+import { ThemeContext, UserContext } from "../App";
 import { EditorContext } from "../pages/editor.page";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import logo from "../imgs/logo.png";
+import lightLogo from "../imgs/logo-light.png";
+import darkLogo from "../imgs/logo-dark.png";
 import AnimationWrapper from "../common/page-animation";
-import defaultBanner from "../imgs/banner.png"; 
+import darkDefaultBanner from "../imgs/blog-banner-dark.png";
+import lightDefaultBanner from "../imgs/blog-banner-light.png"; 
 import { uploadImage } from "../common/aws";
 import { Toaster, toast } from "react-hot-toast";
 import EditorJS from "@editorjs/editorjs";
@@ -15,6 +17,7 @@ const BlogEditor = () => {
   let navigate = useNavigate();
   let { blog, blog: { title, banner, content, tags, desc }, setBlog, textEditor, setTextEditor, setEditorState } = useContext(EditorContext);
   let { userAuth: { access_token } } = useContext(UserContext);
+  let { theme } = useContext(ThemeContext);
   let { blog_id } = useParams();
 
   useEffect(() => {
@@ -133,7 +136,7 @@ const BlogEditor = () => {
     <>
       <nav className="navbar">
         <Link to="/" className="flex-none w-10">
-          <img src={logo} alt="logo" />
+          <img src={theme == "light" ? darkLogo : lightLogo} alt="logo" />
         </Link>
         <p className="w-full text-black max-md:hidden line-clamp-1">
           { title.length ? title : "New Blog" }
@@ -160,7 +163,7 @@ const BlogEditor = () => {
             <div className="relative transition-opacity duration-500 bg-white border-4 aspect-video hover:opacity-60 border-grey">
               <label htmlFor="uploadBanner">
                 <img 
-                  src={banner ? banner : defaultBanner}
+                  src={banner ? banner : (theme == "light" ? lightDefaultBanner : darkDefaultBanner)}
                   className="z-20"
                 />
                 <input 
@@ -176,7 +179,7 @@ const BlogEditor = () => {
             <textarea
               defaultValue={title}
               placeholder="Blog Title"
-              className="w-full h-20 mt-10 !text-4xl font-medium leading-tight outline-none resize-none placeholder:opacity-40"
+              className="w-full h-20 mt-10 !text-4xl font-medium leading-tight outline-none resize-none placeholder:opacity-40 bg-white"
               onKeyDown={handleTitleKeyDown} 
               onChange={handleTitleChange}
             >

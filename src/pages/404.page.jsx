@@ -1,12 +1,17 @@
+import { useContext } from "react";
+import { ThemeContext } from "../App";
 import { Link } from "react-router-dom";
-import pageNotFoundImage from "../imgs/404.png";
+import lightPageNotFoundImage from "../imgs/404-light.png";
+import darkPageNotFoundImage from "../imgs/404-dark.png";
 import fullLogo from "../imgs/full-logo.png";
 
 const PageNotFound = () => {
+  let { theme } = useContext(ThemeContext); 
+
   return (
     <section className="relative flex flex-col items-center gap-20 p-10 text-center h-cover">
       <img 
-        src={pageNotFoundImage}
+        src={theme == "light" ? darkPageNotFoundImage : lightPageNotFoundImage}
         alt="page not found"
         className="object-cover border-2 rounded select-none border-grey w-72 aspect-square"
       />
@@ -15,11 +20,11 @@ const PageNotFound = () => {
     
       <div className="mt-auto">
         <img 
-          src={fullLogo}
+          src={fullLogo} 
           alt="logo"
-          className="block object-contain h-8 mx-auto select-none"
+          className={"block object-contain h-8 mx-auto select-none " + theme == "light" ? "invert-0" : theme == "dark" ? "invert" : ""}
         />
-        <p className="mt-5 text-dark-grey">Read millions of stories around the world</p>
+        <p className="mt-5 text-dark-grey">Read millions of stories around the world</p> 
       </div>
     </section>
   )
