@@ -14,7 +14,7 @@
 
 ## 🔴 Live Demo
 
-[Live Demo](https://friendly-jelly-35092b.netlify.app/)
+[Live Demo](https://frabjous-sunburst-704c1d.netlify.app/sign-in)
 
 
 ## 🛠 Getting Started
