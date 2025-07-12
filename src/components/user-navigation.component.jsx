@@ -6,7 +6,7 @@ import { removeFromSession } from "../common/session";
 
 const UserNavigationPanel = () => {
   const navigate = useNavigate();
-  const { userAuth: { username, access_token }, setUserAuth } = useContext(UserContext);
+  const { userAuth: { username, isAdmin, access_token }, setUserAuth } = useContext(UserContext);
 
   const signOutUser = () => {
     removeFromSession("user");
@@ -20,18 +20,24 @@ const UserNavigationPanel = () => {
       className="absolute right-0 z-50"
     >
       <div className="absolute right-0 duration-200 bg-white border border-grey w-60">
-        <Link to="/editor" className="flex gap-2 py-4 pl-8 link md:hidden">
-          <i className="fi fi-br-edit" />
-          <p>Write</p> 
-        </Link>
+        {
+          isAdmin ?
+          <Link to="/editor" className="flex gap-2 py-4 pl-8 link md:hidden">
+            <i className="fi fi-br-edit" />
+            <p>Write</p> 
+           </Link> : null
+        }
         <Link to={`/user/${username}`} className="flex items-center gap-2 py-4 pl-8 link">
           <i className="fi fi-br-user" />
           <p>Profile</p>  
         </Link>
-        <Link to="/dashboard/blogs" className="flex items-center gap-2 py-4 pl-8 link">
-          <i className="fi fi-br-apps" />
-          <p>Dashboard</p>
-        </Link>
+        {
+          isAdmin ?
+          <Link to="/dashboard/blogs" className="flex items-center gap-2 py-4 pl-8 link">
+            <i className="fi fi-br-apps" />
+            <p>Dashboard</p>
+          </Link> : null
+        }
         <Link to="/settings/edit-profile" className="flex items-center gap-2 py-4 pl-8 link">
           <i className="fi fi-ss-settings" />
           <p>Settings</p>  

@@ -9,7 +9,7 @@ import { storeInSession } from "../common/session";
 
 const Navbar = () => {
   const [searchBoxVisibility, setSearchBoxVisibility] = useState(false);
-  const { userAuth, userAuth: { access_token, profile_img, new_notification_available },
+  const { userAuth, userAuth: { access_token, profile_img, new_notification_available, isAdmin },
   setUserAuth} = useContext(UserContext);
   let { theme, setTheme } = useContext(ThemeContext);
   const [userNavPanel, setUserNavPanel] = useState(false);
@@ -82,10 +82,13 @@ const Navbar = () => {
         >
           <i className="text-xl fi fi-br-search" />
         </button>
-        <Link to="/editor" className="hidden gap-2 md:flex link">
-          <i className="fi fi-br-edit" />
-          <p>Write</p>
-        </Link> 
+        {
+          isAdmin ?
+          <Link to="/editor" className="hidden gap-2 md:flex link">
+            <i className="fi fi-br-edit" />
+            <p>Write</p>
+          </Link> : null
+        }
         <button className="relative w-12 h-12 rounded-full bg-grey hover:bg-black/10" onClick={changeTheme}>
           <i className={"fi fi-br-" + (theme == "light" ? "moon-stars" : "sun") + " !text-2xl block mt-1"} />        
         </button> 

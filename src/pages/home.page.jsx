@@ -62,7 +62,7 @@ const HomePage = () => {
   }
 
   const loadBlogByCategory = (e) => {
-    let category = e.target.innerText.toLowerCase();
+    let category = e.target?.innerText?.toLowerCase();
 
     setBlogs(null);
 
@@ -75,7 +75,7 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    activeTabRef.current.click();
+    activeTabRef?.current?.click();
 
     if(pageState === "home") {
       fetchLatestBlogs({ page: 1 });
@@ -92,13 +92,14 @@ const HomePage = () => {
     <AnimationWrapper>
       <section className="flex justify-center gap-10 h-cover">
         <div className="w-full">
-          <InPageNavigation routes={[pageState, "trending blogs"]} defaultHidden={["trending blogs"]}>
+          { 
+            <InPageNavigation routes={[pageState, "trending blogs"]} defaultHidden={["trending blogs"]}>
             <>
               {
                 blogs === null ? 
                 <Loader /> : 
-                blogs.results.length ?
-                  blogs.results.map((blog, i) => {
+                blogs?.results.length ?
+                  blogs?.results.map((blog, i) => {
                     return <AnimationWrapper transition={{ duration: 1, delay: i*.1 }} key={i}>
                       <BlogPostCard content={blog} author={blog.author.personal_info} />
                     </AnimationWrapper>
@@ -110,8 +111,8 @@ const HomePage = () => {
             <>
               {
                  trendingBlogs === null ? <Loader /> : 
-                 trendingBlogs.length ?
-                 trendingBlogs.map((blog, i) => {
+                 trendingBlogs?.length ?
+                 trendingBlogs?.map((blog, i) => {
                   return <AnimationWrapper transition={{ duration: 1, delay: i*.1 }} key={i}>
                     <MinimalBlogCard blog={blog} index={i} />
                   </AnimationWrapper>
@@ -120,6 +121,7 @@ const HomePage = () => {
               }
             </>
           </InPageNavigation>
+          }
         </div>
         <div className="min-w-[40%] lg:min-w-[400px] max-w-min border-l border-grey pl-8 pt-3 max-md:hidden">
             <div className="flex flex-col gap-10">
@@ -127,7 +129,7 @@ const HomePage = () => {
                 <h2 className="mb-8 !text-xl font-medium">Stories from all interests</h2>
                 <div className="flex flex-wrap gap-3">
                   {
-                    categories.map((category, i) => {
+                    categories?.map((category, i) => {
                       return <button onClick={loadBlogByCategory} className={"tag " + (pageState === category ? "!bg-black text-white" : "")} key={i}>
                         {category}
                       </button>
@@ -140,9 +142,9 @@ const HomePage = () => {
                   Trending <i className="fi fi-br-arrow-trend-up" />
                 </h2>
                 {
-                  trendingBlogs === null ? <Loader /> : 
-                  trendingBlogs.length ?
-                  trendingBlogs.map((blog, i) => {
+                  trendingBlogs == null ? <Loader /> : 
+                  trendingBlogs?.length ?
+                  trendingBlogs?.map((blog, i) => {
                     return <AnimationWrapper transition={{ duration: 1, delay: i*.1 }} key={i}>
                       <MinimalBlogCard blog={blog} index={i} />
                     </AnimationWrapper>

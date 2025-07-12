@@ -4,10 +4,8 @@ import { getDay } from '../common/date';
 
 const MinimalBlogCard = ({ blog, index }) => {
   let {title, blog_id: id, 
-    author: {personal_info: {fullname, username, profile_img} 
-  },
-    publishedAt,
-} = blog;
+    author: {personal_info: { fullname, username, profile_img }},
+    publishedAt } = blog;
 
   return (
     <Link to={`/blog/${id}`} className="flex gap-5 mb-8">
@@ -16,7 +14,7 @@ const MinimalBlogCard = ({ blog, index }) => {
         <div className="flex items-center gap-2 mb-7">
           <img 
             src={profile_img}
-            alt={username}
+            alt={fullname}
             className="w-6 h-6 rounded-full"
           />
           <p className="line-clamp-1">{fullname} @{username}</p>
@@ -24,8 +22,8 @@ const MinimalBlogCard = ({ blog, index }) => {
         </div>
         <h1 className="blog-title">{title}</h1>
       </div>
-    </Link>
+    </Link> 
   )
 }
 
-export default MinimalBlogCard;
+export default MinimalBlogCard; 

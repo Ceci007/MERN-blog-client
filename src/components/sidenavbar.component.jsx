@@ -3,7 +3,7 @@ import { UserContext } from "../App";
 import { Outlet, Navigate, NavLink } from "react-router-dom";
 
 const SideNavbar = () => {
-  let { userAuth: { access_token, new_notification_available }} = useContext(UserContext);
+  let { userAuth: { access_token, new_notification_available, isAdmin }} = useContext(UserContext);
 
   let page = location.pathname.split("/")[2];
 
@@ -73,14 +73,17 @@ const SideNavbar = () => {
                 Notifications
               </NavLink>
 
-              <NavLink 
+             {
+                isAdmin ?
+                <NavLink 
                 to="/editor" 
                 onClick={(e) => setPageState(e.target.innerText)}
                 className="sidebar-link"
-              >
-                <i className="fi fi-br-edit" />
-                Write
-              </NavLink>
+                >
+                  <i className="fi fi-br-edit" />
+                   Write
+                </NavLink> : null
+             } 
 
               <h1 className="!text-xl text-dark-grey mb-3 mt-20">Settings</h1>
               <hr className="mb-8 mr-6 -ml-6 border-grey" />
